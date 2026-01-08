@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Button from '../common/button'
+import { useRef } from 'react'
 
 const Form = styled.form`
   display: flex;
@@ -9,6 +10,34 @@ const Form = styled.form`
   border-left: 1px solid black;
   margin-bottom: 1em;    
 `
+const TextArea = styled.textarea`
+  font-size: 0.8rem;
+  flex-basis: 100%;
+  width: 100%;
+  border: 0;
+  padding: 0.5em;
+  border-bottom: 1px solid black;
+  border-radius: 1px solid black;
+  background: #F5EBE0;
+  &:focus {
+    outline: 0;
+  }
+`
+
+const Input = styled.input`
+  font-size: 0.8rem;
+  width: 100%;
+  border: 0;
+  padding: 0.5em;
+  border-bottom: 1px solid black;
+  border-radius: 1px solid black;
+  background: #F5EBE0;
+  flex: 1 1 30%;
+  &:focus {
+    outline: none;
+  }
+`
+
 
 const Select = styled.select`
   font-size: 0%.8rem;
@@ -34,13 +63,34 @@ const FileInputDiv = styled.div`
   background: #F5EBE0;     
 `
 
-const CardEditorForm = ({FileInput, card}) => {
-  const {name, theme, fileName, fileURL} = card
+const CardEditorForm = ({FileInput, card, insertOrUpdateCard, deleteCard}) => {
+  const {name, company, theme, title, email, message, fileName, fileURL} = card
+  const formRef = useRef();
+  const nameRef = useRef();
+  const companyRef = useRef();
+  const themeRef = useRef();
+  const titleRef = useRef();
+  const emailRef = useRef();
+  const messageRef = useRef();  
   const handleChange = (event) => {
     console.log(event.currentTarget)
+    if(event.currentTarget == null){
+      return
+    }
+    insertOrUpdateCard({
+      ...card,
+      [event.currentTarget.name]: event.currentTarget.value
+    })
   }
-  const onFileChange = () => {
+  const onFileChange = (file) => {
     console.log('onFileChange')
+    //useState에 초기화된 배열에 사용자가 선택한 fileName과 fileURL을 추가해서
+    //배열을 수정해준다.
+    insertOrUpdateCard({
+      ...card,
+      fileName: file.name,
+      fileURL: file.url
+    })
   }
   const handleSubmit = () => {
     // 삭제 처리 - 기능 - 함수 - 어디에 선언할 것인가?
@@ -52,11 +102,19 @@ const CardEditorForm = ({FileInput, card}) => {
   }
   return (
     <Form>
-      <Select name='theme' value={theme} onChange={handleChange}>
+      {/* useRef는 document.querySelector */}
+      <Input ref={nameRef} name='name' value={name} onChange={handleChange} />
+      <Input ref={companyRef} name='company' value={company} onChange={handleChange}/>
+      <Select name='theme' value={theme} onChange={handleChange} >
         <option placeholder="light">light</option>
         <option placeholder="dark">dark</option>
         <option placeholder="colorful">colorful</option>
       </Select>
+
+      <Input ref={titleRef} name="title" value={title} onChange={handleChange} />
+      <Input ref={emailRef} name="email" value={email}  onChange={handleChange} />
+      <TextArea ref={messageRef} name='message' value={message} onChange={handleChange} />
+
       <FileInputDiv>
         <FileInput name={fileName} onChange={handleChange} onFileChange={onFileChange} />
       </FileInputDiv>

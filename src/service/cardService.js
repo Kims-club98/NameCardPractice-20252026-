@@ -24,12 +24,12 @@ class CardLogic { // 클래스 선언 CardLogic
      // clean-up 할때 필요한 문장이다!
     return () => off(query);
   }
-//https://firebase.google.com/docs/database/web/read-and-write?authuser=0 // < 웹에서 데이터 읽고 쓰기
-// 목적: 한 장의 명함카드 정보를 DB에 저장
-// id에 해당하는 값이 존재한다면 수정해주고, id값이 존재하지 않는다면 새로 등록시켜준다.
-// ∴ 입력과 수정 => 하나의 함수로 처리 가능!
-// card.id를 키로 하여 /cards/{card.id} 위치에 저장한다.
-// If 같은 아이디로 다시 저장한다면, 수정 효과가 발생함!
+  //https://firebase.google.com/docs/database/web/read-and-write?authuser=0 // < 웹에서 데이터 읽고 쓰기
+  // 목적: 한 장의 명함카드 정보를 DB에 저장
+  // id에 해당하는 값이 존재한다면 수정해주고, id값이 존재하지 않는다면 새로 등록시켜준다.
+  // ∴ 입력과 수정 => 하나의 함수로 처리 가능!
+  // card.id를 키로 하여 /cards/{card.id} 위치에 저장한다.
+  // If 같은 아이디로 다시 저장한다면, 수정 효과가 발생함!
   saveCard(userId, card) {
     
     set(ref(this.db, `${userId}/cards/${card.id}`), card)
@@ -46,5 +46,4 @@ class CardLogic { // 클래스 선언 CardLogic
     remove(ref(this.db, `${userId}/cards/${card.id}`));
   }
 }
-
 export default CardLogic;

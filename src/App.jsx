@@ -11,7 +11,7 @@ const AppDiv = styled.div`
     align-items: center;
     background-color: #e8e7e6;
 `  
-const App = ({FileInput}) => {
+const App = ({FileInput, cardLogic}) => {
 
   //선언부
   return (
@@ -20,7 +20,7 @@ const App = ({FileInput}) => {
         <Routes>
           {/* 리액트 컴포넌트는 일급함수이다  */}
           <Route path="/" element={<Login />} />
-          <Route path="/maker" element={<Maker FileInput={FileInput} />} />
+          <Route path="/maker" element={<Maker FileInput={FileInput} cardLogic={cardLogic}/>} />
         </Routes>
       </AppDiv>
     </>

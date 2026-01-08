@@ -61,7 +61,7 @@ const FileInputDiv = styled.div`
   background: #F5EBE0;    
 `	 
 
-const CardAddForm = ({FileInput}) => {
+const CardAddForm = ({FileInput, insertOrUpdateCard}) => {
 
   // 왜 useRef사용하나? - 입력받은 값을 card 리터럴에 담기
   // 화면이 다시 그려진다??? -> 기존 값을 잃어버린다.
@@ -84,7 +84,7 @@ const CardAddForm = ({FileInput}) => {
       fileURL: file.url 
     })
   }
-  // CardAddForm.jsx에서 Add버튼 클릭하면 호출됨
+  // CardAddForm.jsx에서 Add버튼 클릭하면 호출됨(Add 버튼에 onClick연결함)
   const onSubmit = (event) => {
     event.preventDefault() //화면이 자동으로 새로고침일어남 -> 입력값을 기억못함
     const card = {
@@ -105,8 +105,11 @@ const CardAddForm = ({FileInput}) => {
     setFile({ fileName: null, fileURL: null })
     // TODO - NoSQL(firestore)과 연동하여 저장하기 - feature/step3
     // 수정, 입력, 삭제 처리는 Maker쪽에서 하기
-
-  }
+    if(insertOrUpdateCard){
+      insertOrUpdateCard(card)}else{
+        console.error("insertOrUpdate 함수가 props에 전달되지 않음");
+      }
+  }// end of onSubmit
   return (
 
 		<Form ref={formRef} className={styles.form}>

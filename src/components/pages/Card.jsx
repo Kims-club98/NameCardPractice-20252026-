@@ -42,11 +42,11 @@ const Card = ({ card }) => {
     <CardLi className={`${styles.card} ${getStyles(theme)}`}>
       <AvatarImg src={url} alt="profile photo" />
       <div style={{ width: "100%" }}>
-        <h1 className={styles.name}>{"홍길동"}</h1>
-        <p className={styles.company}>{"KOSMO"}</p>
-        <p className={styles.title}>{"엔지니어"}</p>
-        <p className={styles.email}>{"kiwi@hot.com"}</p>
-        <p className={styles.message}>{"메시지를 입력하기"}</p>
+        <h1 className={styles.name}>{name}</h1>
+        <p className={styles.company}>{company}</p>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.email}>{email}</p>
+        <p className={styles.message}>{message}</p>
       </div>
     </CardLi>
   );
